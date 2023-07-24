@@ -1,18 +1,27 @@
 package com.example;
 
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.WebPage;
 
-public class HomePage extends WebPage {
-	private static final long serialVersionUID = 1L;
+public class HomePage extends BasePage{
 
-	public HomePage(final PageParameters parameters) {
-		super(parameters);
+    private static final long serialVersionUID = 1L;
 
-		add(new Label("version", getApplication().getFrameworkSettings().getVersion()));
+    String inputValue;
 
-		// TODO Add your page's components here
+    public HomePage(final PageParameters parameters){
+        super(null);
+        this.inputValue="test";
 
-	}
+        Form<String> form = new Form<String>("form"){
+            public final void onSubmit(){
+                setResponsePage(new SecondPage(null,inputValue));
+            }
+        };
+
+        add(form);
+        form.add(new TextField<String>("input",new PropertyModel<>(this,"inputValue")));
+    }
 }
